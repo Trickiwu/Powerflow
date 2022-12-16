@@ -16,7 +16,7 @@ def TestAccuracyForward(num_train, data, Xp, Xq,Xpf,Xqf, Xp_dlpf, Xq_dlpf, B, ex
     :param B:
     :return:
     """
-    # matlab中没有声明test,delta变量
+
     cols = Xp.T.shape[1]
     cols1 = Xpf.T.shape[1]
     test = {

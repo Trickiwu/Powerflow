@@ -10,7 +10,7 @@ warnings.simplefilter('ignore', SparseEfficiencyWarning)
 from pypower import api
 
 
-def left_solve(A, B):#稀疏稠密
+def left_solve(A, B):
     if ssparse.issparse(A) or ssparse.issparse(B):
         return ssparse.linalg.spsolve(A, B)
     return linalg.solve(A, B)
@@ -57,7 +57,6 @@ def remove_nan_inf_cols(arr):
 def get_pls_transform_matrix(pls2):
     mu = pls2._x_mean[np.newaxis, :]
     sigma = pls2._x_std[np.newaxis, :]
-    # property属性coef_会触发FutureWarning,因此改用内置属性_coef_
     # sklearn版本<1.3 (n_features, n_targets)
     # sklearn版本>=1.3 (n_targets, n_features)
     # w = pls2.coef_

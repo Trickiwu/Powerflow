@@ -41,7 +41,6 @@ def RegressionInverse(regression, num_load, data, ref, address, case_name):
         k = np.linalg.matrix_rank(P) + np.linalg.matrix_rank(data['Q']) + 1
         k = min(k, data['P'].shape[0] - 1)
         X_pls = np.hstack([P, data['Q']])  # 500 * 10 n * p
-        # --------------注意！！！ X_pls矩阵非0列可能小于k,修正k
         k = min(k, utils.num_nonzero_cols(X_pls))
 
         # Va

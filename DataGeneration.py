@@ -58,7 +58,7 @@ def DataGeneration(case_name, Q_per, data_name, dc_ac, G_range,
         data['Va_dc'] = np.zeros((num_train, num_load))
         data['P_dc'] = np.zeros((num_train, num_load))
 
-        # Matlab 版本中没有的初始化
+      
         data['P_dlpf'] = np.zeros((num_train, num_load))
         data['PF_dlpf'] = np.zeros((num_train, mpc['branch'].shape[0]))
         data['Va_dlpf'] = np.zeros((num_train, num_load))

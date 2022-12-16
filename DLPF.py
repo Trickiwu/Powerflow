@@ -22,7 +22,7 @@ def DLPF(mpc) -> Tuple[ssparse.spmatrix, ssparse.spmatrix, np.ndarray, np.ndarra
     # Define matpower constants
     # define_constants
     # Load case
-    # pypower 需要额外在此处转换
+    # pypower
     mpc = pp.ext2int(mpc)
     # utils.recursive_visualize('mpc', mpc)
     baseMVA, bus, gen, branch = mpc['baseMVA'], mpc['bus'], mpc['gen'], mpc['branch']
@@ -67,7 +67,7 @@ def DLPF(mpc) -> Tuple[ssparse.spmatrix, ssparse.spmatrix, np.ndarray, np.ndarra
 
     # Calculate voltage magnitude
     n = bus.shape[0]
-    busVol = np.zeros((n,))     # numpy中，声明向量需要省略第二个维度
+    busVol = np.zeros((n,))    
     busVol[ref] = bus[ref, VM]
     busVol[pv] = bus[pv, VM]
     busVol[pq] = utils.left_solve(B22m, Qm2)
@@ -80,7 +80,6 @@ def DLPF(mpc) -> Tuple[ssparse.spmatrix, ssparse.spmatrix, np.ndarray, np.ndarra
     # BranchFlow1 = (busVol(branch(:,F_BUS))./branch(:,TAP)-busVol(branch(:,T_BUS)))
     #               .*branch(:,BR_R)
     #               ./(branch(:,BR_X).^2+branch(:,BR_R).^2)*baseMVA
-    # branch 是浮点型，转换成整形才能进行索引
     BranchFlow1_a = busVol[branch[:, F_BUS].astype(np.uint32)] / branch[:, TAP] - busVol[branch[:, T_BUS].astype(np.uint32)]
     BranchFlow1_b = branch[:, BR_R]
     BranchFlow1_c = branch[:, BR_X] ** 2 + branch[:, BR_R] ** 2

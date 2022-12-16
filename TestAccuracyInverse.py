@@ -54,9 +54,8 @@ def TestAccuracyInverse(num_train, data, Xv, Xva, ref, pv, pq, num_load, extras)
     X21 = Xv[ix_(pv_ref, pq_pv_ref_pqnumload)]
     X22 = Xv[ix_(pv_ref, pv_ref + num_load)]
 
-    # 标量不支持ix_()函数, 报错 Cross index must be 1 dimensional
-    # idx_2numload, 需要包装成list
-    idx_2numload = [2 * num_load]  # 最后一列
+
+    idx_2numload = [2 * num_load]
     C1 = np.vstack([Xva[ix_(pq_pv_ref, idx_2numload)],
                     Xv[ix_(pq, idx_2numload)]])
     C2 = Xv[ix_(pv_ref, idx_2numload)]
@@ -91,12 +90,11 @@ def TestAccuracyInverse(num_train, data, Xv, Xva, ref, pv, pq, num_load, extras)
 
     # # calculate the results by data - driven linearized equations
     for i in range(num_train):
-        # 循环内部向量默认都是2-d
+
         Y2 = data['V'][i, pv_ref][:, np.newaxis].copy()    # [n, 1]
         assert_2d_col_vector(Y2)
 
         a1 = np.concatenate([P[i, pq_pv_ref], data['Q'][i, pq].T])[:, np.newaxis]  # # x1
-        # numpy支持(2d)@(1d)形式矩阵乘法
         a2 = utils.left_solve(X22, Y2 - X21 @ a1 - C2)  # # x2
         assert_2d_col_vector(a2)
 

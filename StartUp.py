@@ -1,6 +1,4 @@
-# The algorithm in this file is based on the following publications:
-# Liu Y, Zhang N, Wang Y, et al. Data-Driven Power Flow Linearization: A Regression Approach. IEEE Transactions on Smart Grid, 2018.
-# This is the start up m-file of the data-driven power flow linearization master
+
 import os
 import numpy as np
 
@@ -14,12 +12,12 @@ import utils
 from TestAccuracyForward import TestAccuracyForward
 from TestAccuracyInverse import TestAccuracyInverse
 
-generate_data = 0 # 1,data generation is needed; 0,data is already generated
-generate_test_data = 0  # 1,data generation is needed; 0,data is already generated
+generate_data = 1 # 1,data generation is needed; 0,data is already generated
+generate_test_data = 1  # 1,data generation is needed; 0,data is already generated
 upper_bound = 1.2  # upper bound of generated load
 lower_bound = 0.8  # lower bound of generated load
-regression = 2  # 0-least squares 1-pls regression 2-bayesian linear regression
-for_or_inv = 1  # 0-forward regression;1-inverse regression
+regression = 1  # 0-least squares 1-pls regression 2-bayesian linear regression
+for_or_inv = 0 # 0-forward regression;1-inverse regression
 
 G_range = 0.1  # range of power generation variations
 Q_range = 0.25  # range of Q variations
@@ -68,7 +66,7 @@ mpc = pp.ext2int(mpc)
 ref, pv, pq = pp.bustypes(mpc['bus'], mpc['gen'])
 
 Xp_dlpf, Xq_dlpf, _, _, _, _ = DLPF(mpc)  # ignore  3.4.5 parameters
-Xp_dlpf = Xp_dlpf.todense()#稀疏到稠密
+Xp_dlpf = Xp_dlpf.todense()
 Xq_dlpf = Xq_dlpf.todense()
 
 if for_or_inv == 0:
